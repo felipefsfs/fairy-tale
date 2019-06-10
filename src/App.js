@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+//import 'materialize-css/dist/css/materialize.min.css';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
+import Splash from "./components/splash.js";
+import Empty from "./components/empty.js";
+import Nav from "./components/nav.js";
 
 function App() {
   return (
-    <div className="App">
-      <h1> Fairy Tale</h1>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <div className="App">
+            <Nav />
+            <Switch>
+                <Route path="/e" component={Empty} />
+                <Route exact path="/" component={Splash} />
+            </Switch>
+        </div>
+    </BrowserRouter>
   );
 }
 
