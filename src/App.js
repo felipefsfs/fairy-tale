@@ -12,8 +12,8 @@ function App() {
         <div className="App">
             <Nav />
             <Switch>
-                <Route to="/" component={Splash} />
-                <Route to="/e" component={Empty} />
+                <Route path="/e" component={Empty} />
+                <Route exact path="/" component={Splash} />
             </Switch>
         </div>
     </BrowserRouter>
