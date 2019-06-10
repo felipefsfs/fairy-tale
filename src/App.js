@@ -1,4 +1,5 @@
 import React from 'react';
+//import 'materialize-css/dist/css/materialize.min.css';
 import logo from './logo.svg';
 import './App.css';
 
@@ -6,6 +7,7 @@ function App() {
   return (
     <div className="App">
       <h1> Fairy Tale</h1>
+      <i className="material-icons">assessment</i>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
