@@ -6,10 +6,6 @@ import Splash from "./components/splash.js";
 import Empty from "./components/empty.js";
 import Nav from "./components/nav.js";
 
-import fff, * as g from "./components/e.js";
-
-fff();
-g.default();
 function App() {
   return (
     <BrowserRouter>
