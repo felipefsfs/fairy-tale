@@ -5,6 +5,7 @@ import './App.css';
 import Splash from "./components/splash.js";
 import Empty from "./components/empty.js";
 import SignIn from "./components/signin.js";
+import SignUp from "./components/signup.js";
 import Nav from "./components/nav.js";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Switch>
                 <Route path="/e" component={Empty} />
                 <Route path="/signin" component={SignIn} />
+                <Route path="/signup" component={SignUp} />
                 <Route exact path="/" component={Splash} />
             </Switch>
         </div>
