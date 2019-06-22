@@ -1,11 +1,8 @@
-import React, { useState, useContext } from "react";
-import { CurrentUserContext } from "../stores/CurrentUser";
+import React, { useState } from "react";
 
 export default function SignIn() {
     const [email, set_email] = useState("");
     const [password, set_password] = useState("");
-
-    const current = useContext(CurrentUserContext);
 
     return (
         <div className="container">
@@ -27,12 +24,11 @@ export default function SignIn() {
         </div>
     );
 
-    function submit(event) {
-        event.preventDefault();
-        console.log(event);
+    function submit(e) {
+        e.preventDefault();
+        console.log(e);
         console.log(email);
         console.log(password);
-        current.create(email,password);
     }
 
     function handleInput(setter) {
