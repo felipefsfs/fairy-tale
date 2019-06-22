@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/database";
 
 
 const options = {
@@ -10,7 +11,7 @@ const options = {
     projectId: "server-rep",
     storageBucket: "server-rep.appspot.com",
     messagingSenderId: "691098630867",
-    appId: "1:691098630867:web:1ecf72b5ccabecf2"
+    appId: "1:691098630867:web:7d98c5577aaee98a"
 };
 
 firebase.initializeApp(options);
