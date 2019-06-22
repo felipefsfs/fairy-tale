@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from "../stores/CurrentUser";
+import gimg from "../images/btn_google_signin_light_normal_web.png";
 
 export default function SignUp() {
     const [email, set_email] = useState("");
     const [password, set_password] = useState("");
-    const [name, set_name] = useState("");
-
+  
+    const current = useContext(CurrentUserContext);
+    
+    useEffect(() => {
+        console.log(email,password);
+        console.log(current.user);
+        console.log(current.errorMessage);
+    })
     return (
         <div className="container">
+            <h5 className="grey-text text-darken-3">Sign Up for a new account</h5>
+            <div className="divider"></div>
+            <ul className="collection">
+              <li className="collection-item" style={{"textAlign": "left"}}>
+                <div>
+                <strong>Social</strong>
+                <img alt="a" onClick={() => current.signInRedirect({ google: true })} style={{"marginRight": "20px"}}  className="secondary-content" src={gimg} />
+                </div>
+                
+              </li>
+            </ul>
+            <div className="divider"></div>
             <form onSubmit={submit} className="white">
-                <h5 className="grey-text text-darken-3">Sign UP</h5>
                 <div className="input-field">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" onChange= {handleInput(set_email)}/>
@@ -18,23 +37,18 @@ export default function SignUp() {
                     <input type="password" id="password" onChange= {handleInput(set_password)}/>
                 </div>
                 <div className="input-field">
-                    <label htmlFor="name">Name</label>
-                    <input type="text" id="name" onChange= {handleInput(set_name)}/>
+                    <button className="btn primary waves-effect waves-light">Register</button>
                 </div>
-                <div className="input-field">
-                    <button className="btn primary">Register</button>
-                </div>
+                <p className="red-text">{current.errorMessage.message}</p>
             </form>
             
         </div>
     );
 
-    function submit(e) {
-        e.preventDefault();
-        console.log(e);
-        console.log(email);
-        console.log(password);
-        console.log(name);
+    function submit(event) {
+        event.preventDefault();
+        console.log("submitted");
+        current.create(email,password);
     }
 
     function handleInput(setter) {
