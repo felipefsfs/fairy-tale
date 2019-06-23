@@ -4,12 +4,18 @@ import CtrlInput from "./CtrlInput";
 import SubmitButton from "./SubmitButton";
 import GoogleSocial from "./GoogleSocial";
 
-export default function SignUp({signup, signin}) {
+export default function SignForm({signup, signin, history}) {
   const [email, set_email] = useState("");
   const [password, set_password] = useState("");
   const [data, setdata] = useState("");
 
   const current = useContext(CurrentUserContext);
+
+  useEffect(() =>{
+    if (!!(current.user||{}).uid) {
+      history.push("/");
+    }// eslint-disable-next-line
+  },[current.user]);
 
   useEffect(() =>{
     if (signup) {

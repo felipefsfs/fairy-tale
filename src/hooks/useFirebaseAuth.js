@@ -46,7 +46,7 @@ export default function useFirebaseAuth() {
         cleanError();
       }
       if (result.credential) {
-        console.log("From redirect: TOKEN - ", result.credential.accessToken);
+        //console.log("From redirect: TOKEN - ", result.credential.accessToken);
       }
     }).catch(errorHandler).finally(() => seWaiting(false));
     // eslint-disable-next-line 
