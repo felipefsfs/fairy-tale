@@ -2,7 +2,7 @@ import React from 'react';
 //import 'materialize-css/dist/css/materialize.min.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
-import Splash from "./components/splash";
+import Splash from "./views/Splash";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import SignOut from "./views/SignOut";

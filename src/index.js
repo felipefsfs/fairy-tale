@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import fb from "./config/fb";
-
-console.log(fb);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
