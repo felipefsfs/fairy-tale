@@ -3,9 +3,9 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
 import Splash from "./components/splash";
-import Empty from "./components/empty"; 
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
+import SignOut from "./views/SignOut";
 import Nav from "./components/Nav/";
 import CurrentUserProvider from "./stores/CurrentUser";
 
@@ -16,7 +16,7 @@ function App() {
         <CurrentUserProvider>
           <Nav />
           <Switch>
-            <Route path="/e" component={Empty} />
+            <Route path="/signout" component={SignOut} />
             <Route path="/plan/new" component={SignIn} />
             <Route path="/plan/:id" component={SignIn} />
             <Route path="/signin" component={SignIn} />
