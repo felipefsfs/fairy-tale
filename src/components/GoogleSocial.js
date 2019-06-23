@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import img_normal from "../images/btn_google_signin_light_normal_web.png";
 import img_focus from "../images/btn_google_signin_light_focus_web.png";
 import img_press from "../images/btn_google_signin_light_pressed_web.png";
-
-export default function GoogleSocial({ signIn }) {
+import img_disabled from "../images/btn_google_signin_light_disabled_web.png";
+ 
+export default function GoogleSocial({ signIn, loading_indc }) {
   const [imgInteraction, setImgInteraction] = useState("");
 
   return (
@@ -14,10 +15,12 @@ export default function GoogleSocial({ signIn }) {
       <li className="collection-item">
         <div>
           <img alt="Sign in with Google" 
-            src={(!imgInteraction && img_normal)
+            src={(loading_indc && img_disabled)
+              ||(!imgInteraction && img_normal)
               ||(imgInteraction === "over"&& img_focus)
               ||(imgInteraction === "click"&& img_press)}
-            onClick={() => signIn({ google: true }) && setImgInteraction("click")}
+            onClick={() => signIn({ abort: !!loading_indc, google: true }) && 
+              setImgInteraction("click")}
             onMouseOver={() => setImgInteraction("over")}
             onMouseOut={() => setImgInteraction("")}
             />
