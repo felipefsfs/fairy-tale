@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
 import Splash from "./components/splash";
 import Empty from "./components/empty"; 
-import SignIn from "./components/signin";
-import SignUp from "./components/signup";
+import SignIn from "./views/SignIn";
+import SignUp from "./views/SignUp";
 import Nav from "./components/nav";
 import CurrentUserProvider from "./stores/CurrentUser";
 
