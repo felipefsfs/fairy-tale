@@ -6,7 +6,7 @@ export default function Empty() {
 
     useEffect(() => {
         current.signOut();
-    })
+    },[]);
     return (
         <header className="App-header">
             <i className="material-icons">assessment</i>
