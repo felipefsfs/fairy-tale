@@ -6,7 +6,7 @@ import Splash from "./components/splash";
 import Empty from "./components/empty"; 
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
-import Nav from "./components/nav";
+import Nav from "./components/Nav/";
 import CurrentUserProvider from "./stores/CurrentUser";
 
 function App() {

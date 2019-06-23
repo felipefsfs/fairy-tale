@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+.mytrans {
+  transition: all 1s linear;
+}
+
+.hidden {
+  display: none;
+}
