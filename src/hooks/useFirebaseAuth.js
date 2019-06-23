@@ -23,9 +23,12 @@ export default function useFirebaseAuth() {
   useEffect(() => {
     auth().onAuthStateChanged(authUser => {
       if (!!authUser) {
-        setUser(authUser);
-        if (!!errorMessage.credential && authUser.email === errorMessage.email) {
-          authUser.linkWithCredential(errorMessage.credential).catch(e => console.log(e));
+        if ((user||{}).uid !== authUser.uid) {
+          setUser(authUser);
+          if (!!errorMessage.credential && authUser.email === errorMessage.email) {
+            cleanError();
+            authUser.linkWithCredential(errorMessage.credential).catch(e => console.log(e));
+          } 
         }
       } else {
         setUser(null);
@@ -35,11 +38,13 @@ export default function useFirebaseAuth() {
 
   useEffect(() => {
     auth().getRedirectResult().then(function(result) {
+      if (result.operationType === "signIn" && (user||{}).uid !== result.user.uid) {
+        setUser(result.user);
+        cleanError();
+      }
       if (result.credential) {
         console.log("From redirect: TOKEN - ", result.credential.accessToken);
       }
-      console.log("From redirect: USER - ",result.user);
-      console.log("From redirect: ", result);
     }).catch(function(e) {
       errorHandler(e);
     });// eslint-disable-next-line 
@@ -65,6 +70,7 @@ export default function useFirebaseAuth() {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
       console.log("createUserWithEmailAndPassword Triggered");
+      cleanError();
     } catch(e) {
       errorHandler(e);
     }
@@ -74,6 +80,7 @@ export default function useFirebaseAuth() {
     try {
       await auth().signInWithEmailAndPassword(email, password);
       console.log("signInWithEmailAndPassword Triggered");
+      cleanError();
     } catch(e) {
       errorHandler(e);
     }
@@ -83,6 +90,7 @@ export default function useFirebaseAuth() {
     try {
       await auth().signOut();
       console.log("signOut Triggered");
+      cleanError();
     } catch(e) {
       errorHandler(e);
     }
@@ -110,6 +118,15 @@ export default function useFirebaseAuth() {
         error.credential) || errorMessage.credential,
       email: (error.code === 'auth/account-exists-with-different-credential' &&
         error.mail) || errorMessage.email 
+    });
+  }
+
+  function cleanError() {
+    setErrorMessage({ 
+      code: null, 
+      message: null, 
+      credential: null,
+      email: null 
     });
   }
 }
