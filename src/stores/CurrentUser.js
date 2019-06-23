@@ -5,6 +5,7 @@ import useFirebaseAuth from "../hooks/useFirebaseAuth";
 export const CurrentUserContext = createContext({
   user: {},
   errorMessage: {}, 
+  waiting: false,
   create() {}, 
   signIn() {}, 
   signInRedirect() {}, 
@@ -14,12 +15,12 @@ export const CurrentUserContext = createContext({
 export default function CurrentUserProvider(props) {
   //useLocal("currentuser", [[user, setUser]]);
   const [ 
-    { user, errorMessage }, 
+    { user, errorMessage, waiting }, 
     { create, signIn, signInRedirect, signOut }
   ] = useFirebaseAuth();
   
   return (
-    <CurrentUserContext.Provider value={{user, errorMessage, create, signIn, signInRedirect, signOut}}>
+    <CurrentUserContext.Provider value={{user, errorMessage, waiting, create, signIn, signInRedirect, signOut}}>
       {props.children}
     </CurrentUserContext.Provider>
   );
