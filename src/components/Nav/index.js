@@ -8,14 +8,14 @@ export default function Nav() {
     const current = useContext(CurrentUserContext);
 
     const user = (current.user||{}).uid;
-    console.log("user", user);
+    const loading = current.waiting;
     return (
         <nav className="nav-wrapper grey">
             <div className="container">
                 <Link to="/" className="left brand-logo">
                     Fairy Tale
                 </Link>
-                {(!!user && (<LinkSigned />))||(<LinkAnon />)}
+                {!loading && ((!!user && (<LinkSigned />))||(<LinkAnon />))}
             </div>     
         </nav>
     );
