@@ -1,0 +1,22 @@
+.banner {
+    position: relative;
+    background: rgba(99, 221, 230, 0.60);
+  }
+  
+  .banner > .action {
+    position: absolute;
+    
+    top: 40%;
+    left: 55%;
+  }
+  
+p {
+  text-shadow: 3px 3px 1px #333;
+}
+
+.toaction {
+    margin: 0px;
+    height: 20vh;
+    align-items: center;
+    line-height: 5vh;
+}

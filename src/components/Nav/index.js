@@ -2,20 +2,19 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import LinkSigned from "./LinkSigned";
 import LinkAnon from "./LinkAnon";
+import "./nav.css";
 import { CurrentUserContext } from "../../stores/CurrentUser";
 
 export default function Nav() {
-    const current = useContext(CurrentUserContext);
+    const { waiting, user} = useContext(CurrentUserContext);
 
-    const user = (current.user||{}).uid;
-    const loading = current.waiting;
     return (
         <nav className="nav-wrapper grey">
             <div className="container">
-                <Link to="/" className="left brand-logo">
+                <Link to="/b" className="left brand-logo">
                     Fairy Tale
                 </Link>
-                {!loading && ((!!user && (<LinkSigned />))||(<LinkAnon />))}
+                {!waiting && ((!!(user||{}).uid && (<LinkSigned />))||(<LinkAnon />))}
             </div>     
         </nav>
     );

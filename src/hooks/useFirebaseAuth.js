@@ -8,7 +8,7 @@ const facebookProvider = new auth.FacebookAuthProvider();
 
 export default function useFirebaseAuth() {
   const [user, setUser] = useState(null);
-  const [waiting, seWaiting] = useState(false);
+  const [waiting, setWaiting] = useState(true);
   const [errorMessage, setErrorMessage] = useState({ 
     code: null, 
     message: null, 
@@ -23,33 +23,38 @@ export default function useFirebaseAuth() {
 
   useEffect(function observeUserUpdate() {
     auth().onAuthStateChanged(authUser => {
-      seWaiting(false);
       if (!!authUser) {
         if ((user||{}).uid !== authUser.uid) {
           setUser(authUser);
+          setWaiting(false);
           if (!!errorMessage.credential && authUser.email === errorMessage.email) {
             cleanError();
+            setWaiting(false);
             authUser.linkWithCredential(errorMessage.credential).catch(console.log);
           } 
         }
       } else {
         setUser(null);
+        setWaiting(false);
       }
     });// eslint-disable-next-line
   }, []);
 
   useEffect(function whenRedirected() {
-    seWaiting(true);
+    setWaiting(true);
     auth().getRedirectResult().then(result => {
       if (result.operationType === "signIn" && (user||{}).uid !== result.user.uid) {
         setUser(result.user);
+        setWaiting(false);
         cleanError();
       }
       if (result.credential) {
         //console.log("From redirect: TOKEN - ", result.credential.accessToken);
       }
-    }).catch(errorHandler).finally(() => seWaiting(false));
-    // eslint-disable-next-line 
+    }).catch(e=> {
+      errorHandler(e);
+      setWaiting(false);
+    });// eslint-disable-next-line 
   }, []);
 
   useEffect(function credentialErrorCheck() {
@@ -70,38 +75,38 @@ export default function useFirebaseAuth() {
   
   async function create(email="", password="") {
     try {
-      seWaiting(true);
+      setWaiting(true);
       await auth().createUserWithEmailAndPassword(email, password);
       console.log("createUserWithEmailAndPassword Triggered");
       cleanError();
     } catch(e) {
       errorHandler(e);
     }
-    seWaiting(false);
+    setWaiting(false);
   }
 
   async function signIn(email="", password="") {
     try {
-      seWaiting(true);
+      setWaiting(true);
       await auth().signInWithEmailAndPassword(email, password);
       console.log("signInWithEmailAndPassword Triggered");
       cleanError();
     } catch(e) {
       errorHandler(e);
     }
-    seWaiting(false);
+    setWaiting(false);
   }
 
   async function signOut() {
     try {
-      seWaiting(true);
+      setWaiting(true);
       await auth().signOut();
       console.log("signOut Triggered");
       cleanError();
     } catch(e) {
       errorHandler(e);
     }
-    seWaiting(false);
+    setWaiting(false);
   }
 
   async function signInRedirect({abort, google, facebook}) {
@@ -111,12 +116,12 @@ export default function useFirebaseAuth() {
       (!!facebook && facebookProvider)
     );
     try {
-      seWaiting(true);
+      setWaiting(true);
       await auth().signInWithRedirect(provider);
       console.log("signInWithRedirect Triggered");
     } catch(e) {
       errorHandler(e);
-      seWaiting(false);
+      setWaiting(false);
     }
   }
   
