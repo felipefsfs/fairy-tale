@@ -1,4 +1,6 @@
 <script>
+	import "./sass/stylesheet.scss";
+	
 	export let name;
 </script>
 
