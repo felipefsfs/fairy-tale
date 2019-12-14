@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function CtrlInput({ value, setValue, type, inputId, children }) {
+export default function CtrlInput({ value, setValue, type = "text", inputId, children }) {
   return (
     <div className="input-field">
       <label htmlFor={inputId}>{children}</label>
-      <input type={type} id={inputId} onChange= {handleInput(setValue)} value={value}/>
+      <input type={type} id={inputId} onChange= {handleInput(setValue)} value={value} />
     </div>
   );
 

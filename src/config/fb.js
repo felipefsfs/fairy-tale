@@ -15,6 +15,4 @@ const options = {
 };
 
 firebase.initializeApp(options);
-firebase.firestore();
-
 export default firebase;

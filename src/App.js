@@ -6,6 +6,7 @@ import Splash from "./views/Splash";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
 import SignOut from "./views/SignOut";
+import NewPlan from "./views/NewPlan";
 import Nav from "./components/Nav/";
 import CurrentUserProvider from "./stores/CurrentUser";
 
@@ -17,8 +18,9 @@ function App() {
           <Nav />
           <Switch>
             <Route path="/signout" component={SignOut} />
-            <Route path="/plan/new" component={SignIn} />
             <Route path="/plan/:id" component={SignIn} />
+            <Route path="/plan" component={NewPlan} />
+            <Route path="/dashboard" component={Splash} />
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/" component={Splash} />

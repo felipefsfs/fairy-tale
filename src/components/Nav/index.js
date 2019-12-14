@@ -7,6 +7,7 @@ import { CurrentUserContext } from "../../stores/CurrentUser";
 
 export default function Nav() {
     const { waiting, user} = useContext(CurrentUserContext);
+console.log(user);
 
     return (
         <nav className="nav-wrapper grey">
@@ -14,7 +15,7 @@ export default function Nav() {
                 <Link to="/b" className="left brand-logo">
                     Fairy Tale
                 </Link>
-                {!waiting && ((!!(user||{}).uid && (<LinkSigned />))||(<LinkAnon />))}
+                {!waiting && ((!!(user||{}).uid && (<LinkSigned displayName={user.displayName}/>))||(<LinkAnon />))}
             </div>     
         </nav>
     );
