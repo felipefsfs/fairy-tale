@@ -1,6 +1,6 @@
 <script>
 	import "./sass/stylesheet.scss";
-	
+	import Lform from "./login.svelte";
 	export let name;
 </script>
 
@@ -13,6 +13,7 @@
 		</div>
 	</div>
 	<button class="button is-primary">click me</button>
+	<Lform />
 </main>
 
 <style>
