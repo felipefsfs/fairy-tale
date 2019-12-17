@@ -1,12 +1,13 @@
 <script>
     export let name = "name";
     export let icon = "";
+    export let placeholder = name;
     export let number = false;
     export let date = false;
     export let email = false;
     export let password = false;
 
-    export let v = "";
+    export let value = "";
 
     $: inner = name.toLowerCase();
     $: icon_class = "fa-" + icon;
@@ -16,19 +17,19 @@
 <div class="control" class:has-icons-left={!!icon}>
     <label class="label" for={inner}>{name}</label>
     {#if !!password}
-        <input class="input" type="password" id={inner} bind:value={v}>
+        <input class="input" type="password" id={inner} bind:value>
     {:else if  !!email}
-        <input class="input" type="email" id={inner} placeholder={inner} bind:value={v}>
+        <input class="input" type="email" id={inner} {placeholder} bind:value>
     {:else if  !!number}
-        <input class="input" type="number" id={inner} bind:value={v}>
+        <input class="input" type="number" id={inner} bind:value>
     {:else if  !!date}
-        <input class="input" type="date" id={inner} bind:value={v}>
+        <input class="input" type="date" id={inner} bind:value>
     {:else}
-        <input class="input" type="text" id={inner} placeholder={inner} bind:value={v}>
+        <input class="input" type="text" id={inner} {placeholder} bind:value>
     {/if}
     {#if !!icon}
-    <span class="icon is-small is-left">
-        <i class={"fas " + icon_class}></i>
-    </span>
+        <span class="icon is-small is-left">
+            <i class={"fas " + icon_class}></i>
+        </span>
     {/if}
 </div>

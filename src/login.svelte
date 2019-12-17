@@ -15,10 +15,10 @@
         <div class="card-content">
             <form on:submit|preventDefault="{submit_login}">
                 <div class="field">
-                    <Field name="Email" email bind:v={email}></Field>
+                    <Field name="Email" email bind:value={email}></Field>
                 </div>
                 <div class="field">
-                    <Field name="Password" password bind:v={password}></Field>
+                    <Field name="Password" password bind:value={password}></Field>
                 </div>
                 <div class="field">
                     <div class="control">
