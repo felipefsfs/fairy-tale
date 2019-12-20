@@ -1,8 +1,9 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/database";
-
+export let fb = {};
+export function init() {
+    console.log(firebase);
+    firebase.initializeApp(options);
+    fb = firebase;
+}
 
 const options = {
     apiKey: "AIzaSyCNDCzfNXZdtQUOvr8aQTdNvR9Xeshu6ok",
@@ -13,6 +14,3 @@ const options = {
     messagingSenderId: "691098630867",
     appId: "1:691098630867:web:7d98c5577aaee98a"
 };
-
-firebase.initializeApp(options);
-export default firebase;

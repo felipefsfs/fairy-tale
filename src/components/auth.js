@@ -1,6 +1,6 @@
-import firebase from "../stores/firebase.js";
+import {fb} from "../stores/firebase.js";
 
-const auth = firebase.auth;
+const auth = fb.auth;
 const googleProvider = new auth.GoogleAuthProvider();
 
 export async function signIn(email="", password="") {

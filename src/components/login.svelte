@@ -1,9 +1,11 @@
 <script>
     import Field from "./field.svelte";
-    import { signIn, signOut} from "./auth.js";
+    //import { signIn, signOut} from "./auth.js";
     let email;
     let password;
 
+signIn=()=>{};
+ signOut=()=> {};
     function submit_login() {
         console.log(email);
         console.log(password);
