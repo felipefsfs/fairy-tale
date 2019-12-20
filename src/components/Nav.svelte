@@ -1,60 +1,84 @@
 <script>
 	export let segment;
+
+	let burg = false;
+
+	function burger() {
+		burg = !burg;
+	}
 </script>
 
-<style>
-	nav {
-		border-bottom: 1px solid rgba(255,62,0,0.1);
-		font-weight: 300;
-		padding: 0 1em;
-	}
+<nav class="navbar" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="/">
+			Fairy Tale
+		</a>
 
-	ul {
-		margin: 0;
-		padding: 0;
-	}
+		<div role="button" href={segment} 
+				class="navbar-burger burger" 
+				class:is-active={burg}
+				aria-label="menu" aria-expanded="false" 
+				data-target="navbarBasicExample"
+				on:click={burger}>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+		</div>
+	</div>
 
-	/* clearfix */
-	ul::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
+	<div id="navbarBasicExample" class="navbar-menu" class:is-active={burg} on:click={burger}>
+		<div class="navbar-start">
+			<a class="navbar-item" class:selected='{segment === undefined}' href='.'>
+				My Dashboard
+			</a>
 
-	li {
-		display: block;
-		float: left;
-	}
+			<a class="navbar-item is-active" class:selected='{segment === "about"}' href='about'>
+				My Sheets
+			</a>
 
-	.selected {
-		position: relative;
-		display: inline-block;
-	}
+			<div class="navbar-item has-dropdown is-hoverable">
+				<a class="navbar-link">
+					Favorites
+				</a>
 
-	.selected::after {
-		position: absolute;
-		content: '';
-		width: calc(100% - 1em);
-		height: 2px;
-		background-color: rgb(255,62,0);
-		display: block;
-		bottom: -1px;
-	}
+				<div class="navbar-dropdown">
+					<a class="navbar-item" rel=prefetch class:selected='{segment === "blog"}' href='blog'>
+						Sheet 1
+					</a>
+					<a class="navbar-item">
+						Shhet 2
+					</a>
+					<a class="navbar-item">
+						Tshee 3
+					</a>
+					<hr class="navbar-divider">
+					<a class="navbar-item">
+						FAvorite Shhet 4
+					</a>
+				</div>
+			</div>
+			
+			<div class="navbar-item">
+				<div class="buttons">
+					<a class="button is-info">
+						<strong>New Sheet</strong>
+					</a>
+				</div>
+			</div>
+		</div>
 
-	a {
-		text-decoration: none;
-		padding: 1em 0.5em;
-		display: block;
-	}
-</style>
-
-<nav>
-	<ul>
-		<li><a class:selected='{segment === undefined}' href='.'>home</a></li>
-		<li><a class:selected='{segment === "about"}' href='about'>about</a></li>
-
-		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
-		     the blog data when we hover over the link or tap it on a touchscreen -->
-		<li><a rel=prefetch class:selected='{segment === "blog"}' href='blog'>blog</a></li>
-	</ul>
+		<div class="navbar-end">
+			<div class="navbar-item">
+				<div class="buttons">
+					<button class="button is-primary">
+						<strong>Sign up</strong>
+					</button>
+					<button class="button is-light">
+						Log in
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </nav>
+

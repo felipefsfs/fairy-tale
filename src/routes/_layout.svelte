@@ -6,6 +6,7 @@
 
 <style>
 	main {
+		text-align: center;
 		position: relative;
 		max-width: 56em;
 		background-color: white;
