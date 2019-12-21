@@ -1,7 +1,7 @@
 import {fb} from "../stores/firebase.js";
-
-const auth = fb.auth;
-const googleProvider = new auth.GoogleAuthProvider();
+$: auth = $fb.auth;
+$: console.log( "auth ",auth);
+//const googleProvider = new auth.GoogleAuthProvider();
 
 export async function signIn(email="", password="") {
     try {

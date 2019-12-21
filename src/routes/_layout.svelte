@@ -1,12 +1,17 @@
 <script>
 	import Nav from '../components/Nav.svelte';
-	import {init} from "../stores/firebase.js";
+	import { loaded } from "../stores/firebase.js";
 	export let segment;
 
-	function l() {
-		console.log("loaded");
-		init();
-	}
+	function track_firebase_load(n=0) {
+		return function inner() {
+			n-=1;
+			if (n == 0) {
+				loaded.set(true);
+			}
+		}
+	};
+	const track = track_firebase_load(3);
 </script>
 
 <style>
@@ -27,7 +32,7 @@
 	<slot></slot>
 </main>
 <svelte:head>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js" on:load={l}></script>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js" on:load={l}></script>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js" on:load={l}></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js" on:load={track}></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js" on:load={track}></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js" on:load={track}></script>
 </svelte:head>
