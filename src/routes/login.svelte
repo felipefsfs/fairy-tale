@@ -1,8 +1,8 @@
 <script>
   import { fade } from 'svelte/transition';
-  import Field from "./field.svelte";
-  import Google from "./social_google.svelte";
-  import { functions, status, user } from "../stores/authentication.js";
+  import Field from "../components/field.svelte";
+  import Google from "../components/social_google.svelte";
+  import { functions, status } from "../stores/authentication.js";
   
   let email;
   let password;
@@ -11,7 +11,6 @@
     console.log(email);
     console.log(password);
     if (!email && !password) {
-      $functions.signOut();
       return;
     }
     $functions.signIn(email, password);
@@ -26,8 +25,7 @@
     password="";
   }
 </script>
-<h2>{($user||{}).email}</h2>
-<div class="container columns">
+<div class="container columns" transition:fade="{{delay: 0, duration: 300}}" >
   <div class="card column is-half is-offset-one-quarter">
     <div class="card-content">
       <Google on:click={submit_google} hold={$status.waiting}/>
@@ -43,13 +41,10 @@
             <button class="button is-primary" disabled={$status.waiting}>Sign In</button>
           </div>
           {#if !!($status.error||{}).message}
-          <p transition:fade="{{delay: 100, duration: 150}}" class="help is-danger">{$status.error.message}</p>
+          <p transition:fade="{{delay: 100, duration: 200}}" class="help is-danger">{$status.error.message}</p>
           {/if}
         </div>
       </form>
     </div>
   </div>
 </div>
-<h2>{$status.waiting && "waiting"}</h2>
-<h2>{($status.error||{}).code}</h2>
-<h2>{($status.error||{}).message}</h2>

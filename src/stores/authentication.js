@@ -108,28 +108,6 @@ function check_credential_error({email} = {}) {
   return false;
 }
 
-async function signIn(email="", password="") {
-  try {
-    console.log(email, password, "signin");
-    await auth().signInWithEmailAndPassword(email, password);
-    console.log("signInWithEmailAndPassword Triggered");
-  } catch(e) {
-    errorHandler(e);
-  }
-  console.log(email, password, "signin END!");
-}
-
-async function signOut() {
-  try {
-    console.log("sign out");
-    await auth().signOut();
-    console.log("signOut Triggered");
-  } catch(e) {
-    errorHandler(e);
-  }
-  console.log( "sig out END!");;
-}
-
 function clean_user(user) {
   const { uid, refreshToken, photoUrl, email, displayName, providerData } = user;
   return { 

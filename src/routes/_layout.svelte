@@ -1,8 +1,11 @@
 <script>
+  	import { fade } from 'svelte/transition';
 	import Nav from '../components/Nav.svelte';
-	import { loaded } from "../stores/firebase_init.js";
 	export let segment;
 
+</script>
+<script context="module">
+	import { loaded } from "../stores/firebase_init.js";
 	function track_firebase_load(n=0) {
 		return function inner() {
 			n-=1;
@@ -13,7 +16,6 @@
 	};
 	const track = track_firebase_load(3);
 </script>
-
 <style>
 	main {
 		text-align: center;
@@ -32,7 +34,7 @@
 	<slot></slot>
 </main>
 <svelte:head>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js" on:load={track}></script>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js" on:load={track}></script>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js" on:load={track}></script>
+  <script defer src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js" on:load={track}></script>
+  <script defer src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js" on:load={track}></script>
+  <script defer src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js" on:load={track}></script>
 </svelte:head>
