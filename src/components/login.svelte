@@ -1,26 +1,14 @@
 <script>
   import Field from "./field.svelte";
-  import { fb_auth } from "../stores/firebase.js";
-  $: auth = $fb_auth;
-  $: if (!!auth) {
-    auth().onAuthStateChanged(authUser => {
-      if (!!authUser) {
-        console.log(authUser);
-      } else {
-        console.log("no user");
-      }
-    });
-  }
-
-//const googleProvider = new auth.GoogleAuthProvider();
+  import { firebase, status, user } from "../stores/authentication.js";
 
   async function signIn(email="", password="") {
     try {
       console.log(email, password, "signin");
-      await auth().signInWithEmailAndPassword(email, password);
+      await $firebase.auth().signInWithEmailAndPassword(email, password);
       console.log("signInWithEmailAndPassword Triggered");
     } catch(e) {
-      errorHandler(e);
+      console.log(e);
     }
     console.log(email, password, "signin END!");
   }
@@ -28,26 +16,14 @@
   async function signOut() {
     try {
       console.log("sign out");
-      await auth().signOut();
+      await $firebase.auth().signOut();
       console.log("signOut Triggered");
     } catch(e) {
-      errorHandler(e);
+      console.log(e);
     }
     console.log( "sig out END!");;
   }
 
-  function errorHandler(error) {
-    const errorMessage = {};
-    console.log("ERROR", error.code);
-    console.log({ 
-      code: error.code, 
-      message: error.message,
-      credential: (error.code === 'auth/account-exists-with-different-credential' &&
-      error.credential) || errorMessage.credential,
-      email: (error.code === 'auth/account-exists-with-different-credential' &&
-      error.mail) || errorMessage.email 
-    });
-  }
 
   let email;
   let password;
@@ -64,7 +40,7 @@
     password="";
   }
 </script>
-
+<h2>{($user||{}).email}</h2>
 <div class="container">
   <div class="card">
     <div class="card-content">
@@ -77,7 +53,7 @@
         </div>
         <div class="field">
           <div class="control">
-            <button class="button is-primary">click me</button>
+            <button class="button is-primary" disabled={$status.waiting}>click me</button>
           </div>
         </div>
       </form>

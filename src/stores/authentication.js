@@ -1,6 +1,7 @@
 import { derived, writable, get } from 'svelte/store';
 import { fb } from "./firebase_init.js";
 
+export const firebase = fb;
 export const status = writable({waiting: true, error: null});
 
 export const user = derived(fb, async ($fb, set) => {
@@ -19,7 +20,7 @@ function derive_auth_direct({auth} = {}, set_user) {
     set_user(currUser);
     waiting(false);
   } else {
-    set(null);
+    set_user(null);
   }
 }
 
@@ -51,7 +52,7 @@ function derive_auth_stream({auth} = {}, set_user) {
         //authUser.linkWithCredential(errorMessage.credential).catch(console.log);
       } 
     } else {
-      set(null);
+      set_user(null);
     }
     waiting(false);
   });
@@ -84,6 +85,27 @@ function check_credential_error({email} = {}) {
   return false;
 }
 
+async function signIn(email="", password="") {
+  try {
+    console.log(email, password, "signin");
+    await auth().signInWithEmailAndPassword(email, password);
+    console.log("signInWithEmailAndPassword Triggered");
+  } catch(e) {
+    errorHandler(e);
+  }
+  console.log(email, password, "signin END!");
+}
+
+async function signOut() {
+  try {
+    console.log("sign out");
+    await auth().signOut();
+    console.log("signOut Triggered");
+  } catch(e) {
+    errorHandler(e);
+  }
+  console.log( "sig out END!");;
+}
 
 function clean_user(user) {
   const { uid, refreshToken, photoUrl, email, displayName, providerData } = user;

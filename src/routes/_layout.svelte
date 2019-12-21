@@ -1,6 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
-	import { loaded } from "../stores/firebase.js";
+	import { loaded } from "../stores/firebase_init.js";
 	export let segment;
 
 	function track_firebase_load(n=0) {
