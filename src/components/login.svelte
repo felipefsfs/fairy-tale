@@ -1,29 +1,10 @@
 <script>
   import Field from "./field.svelte";
-  import { firebase, status, user } from "../stores/authentication.js";
-
-  async function signIn(email="", password="") {
-    try {
-      console.log(email, password, "signin");
-      await $firebase.auth().signInWithEmailAndPassword(email, password);
-      console.log("signInWithEmailAndPassword Triggered");
-    } catch(e) {
-      console.log(e);
-    }
-    console.log(email, password, "signin END!");
-  }
-
-  async function signOut() {
-    try {
-      console.log("sign out");
-      await $firebase.auth().signOut();
-      console.log("signOut Triggered");
-    } catch(e) {
-      console.log(e);
-    }
-    console.log( "sig out END!");;
-  }
-
+  import { functions, status, user } from "../stores/authentication.js";
+  import img_normal from "../images/btn_google_signin_light_normal_web.png";
+  import img_focus from "../images/btn_google_signin_light_focus_web.png";
+  import img_press from "../images/btn_google_signin_light_pressed_web.png";
+  import img_disabled from "../images/btn_google_signin_light_disabled_web.png";
 
   let email;
   let password;
@@ -32,10 +13,10 @@
     console.log(email);
     console.log(password);
     if (!email && !password) {
-      signOut();
+      $functions.signOut();
       return;
     }
-    signIn(email, password);
+    $functions.signIn(email, password);
     email="";
     password="";
   }
@@ -44,6 +25,18 @@
 <div class="container">
   <div class="card">
     <div class="card-content">
+      <div>
+        <img alt="Sign in with Google" 
+          src={(loading_indc && img_disabled)
+            ||(!imgInteraction && img_normal)
+            ||(imgInteraction === "over"&& img_focus)
+            ||(imgInteraction === "click"&& img_press)}
+          onClick={() => signIn({ abort: !!loading_indc, google: true }) && 
+            setImgInteraction("click")}
+          onMouseOver={() => setImgInteraction("over")}
+          onMouseOut={() => setImgInteraction("")}
+          />
+      </div>
       <form on:submit|preventDefault="{submit_login}">
         <div class="field">
           <Field name="Email" email bind:value={email}></Field>
