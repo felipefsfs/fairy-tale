@@ -93,8 +93,8 @@ function auth_err({code, message, credential, mail} = {}) {
     return {...s, error: { 
       code, 
       message, 
-      credential: (other_credential && credential) || s.error.credential,
-      mail: (other_credential && mail) || s.error.mail } 
+      credential: (other_credential && credential) || (s.error||{}).credential,
+      mail: (other_credential && mail) || (s.error||{}).mail } 
     };
   });
 }

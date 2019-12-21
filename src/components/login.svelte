@@ -1,11 +1,13 @@
 <script>
   import Field from "./field.svelte";
   import { functions, status, user } from "../stores/authentication.js";
-  import img_normal from "../images/btn_google_signin_light_normal_web.png";
-  import img_focus from "../images/btn_google_signin_light_focus_web.png";
-  import img_press from "../images/btn_google_signin_light_pressed_web.png";
-  import img_disabled from "../images/btn_google_signin_light_disabled_web.png";
 
+  const img_normal = "btn_google_signin_light_normal_web.png";
+  const img_focus = "btn_google_signin_light_focus_web.png";
+  const img_press = "btn_google_signin_light_pressed_web.png";
+  const img_disabled = "btn_google_signin_light_disabled_web.png";
+
+  let google_img = img_normal;
   let email;
   let password;
 
@@ -20,22 +22,26 @@
     email="";
     password="";
   }
+  
+  function submit_google() {
+    if ($status.waiting) return;
+    $functions.signInGoogle();
+    google_img = img_press;
+    email="";
+    password="";
+  }
 </script>
 <h2>{($user||{}).email}</h2>
 <div class="container">
   <div class="card">
     <div class="card-content">
       <div>
-        <img alt="Sign in with Google" 
-          src={(loading_indc && img_disabled)
-            ||(!imgInteraction && img_normal)
-            ||(imgInteraction === "over"&& img_focus)
-            ||(imgInteraction === "click"&& img_press)}
-          onClick={() => signIn({ abort: !!loading_indc, google: true }) && 
-            setImgInteraction("click")}
-          onMouseOver={() => setImgInteraction("over")}
-          onMouseOut={() => setImgInteraction("")}
-          />
+        <img alt="Sign in with Google"
+          src={google_img}
+          on:click={() => submit_google()}
+          on:mouseover={() => google_img = img_focus}
+          on:mouseout={() => google_img = img_normal}
+        />
       </div>
       <form on:submit|preventDefault="{submit_login}">
         <div class="field">
@@ -53,3 +59,6 @@
     </div>
   </div>
 </div>
+<h2>{$status.waiting && "waiting"}</h2>
+<h2>{($status.error||{}).code}</h2>
+<h2>{($status.error||{}).message}</h2>
