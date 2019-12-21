@@ -1,8 +1,31 @@
 import { derived, writable, get } from 'svelte/store';
 import { fb } from "./firebase_init.js";
 
-export const firebase = fb;
 export const status = writable({waiting: true, error: null});
+
+export const functions = derived(fb, ($fb) => {
+  if (!!$fb.auth) {
+    const googleProvider = new $fb.auth.GoogleAuthProvider();
+    return {
+      signIn(email="", password="") {
+        waiting();
+        $fb.auth().signInWithEmailAndPassword(email, password)
+          .catch(auth_err)
+          .then(()=>waiting(false));
+      },
+      signOut() {
+        waiting();
+        $fb.auth().signOut() .catch(auth_err).then(()=>waiting(false));
+      },
+      signInGoogle() {
+        waiting();
+        $fb.auth().signInWithRedirect(googleProvider)
+          .catch(auth_err)
+          .then(()=>waiting(false));
+      }
+    }
+  }
+}, null);
 
 export const user = derived(fb, async ($fb, set) => {
   waiting();
